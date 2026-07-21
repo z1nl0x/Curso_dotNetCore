@@ -1,0 +1,2 @@
+- Na raiz aqui do projeto, onde o arquivo docker-compose.yml está rode o comando:
+    docker compose up -d
