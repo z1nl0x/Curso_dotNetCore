@@ -1,6 +1,7 @@
 using APICatalogo.Context;
 using APICatalogo.Domains;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace APICatalogo.Controllers;
@@ -15,28 +16,55 @@ public class ProdutosController : ControllerBase
         _context = context;
     }
     
-    [HttpGet]
-    public ActionResult<IEnumerable<Produto>> Get()
+    // [HttpGet("primeiro")]
+    [HttpGet("{valor:alpha:length(5)}")]
+    public ActionResult<Produto> GetPrimeiro()
     {
-        var produtos =  _context.Produtos.AsNoTracking().ToList();
+        var produto =  _context.Produtos.AsNoTracking().FirstOrDefault();
+        if (produto == null)
+        {
+            return NotFound();
+        }
+        return produto;
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Produto>>> Get()
+    {
+        var produtos =  _context.Produtos.AsNoTracking().ToListAsync();
         if (produtos == null)
         {
             return NotFound();
         }
-        return produtos;
+        return await produtos;
     }
     
-    [HttpGet("{id:int}", Name="ObterProduto")]
-    public ActionResult<Produto> Get(int id)
+    [HttpGet("{id:int:min(1)}", Name="ObterProduto")]
+    public async Task<ActionResult<Produto>> Get(int id)
     {
-        var produto = _context.Produtos.AsNoTracking().FirstOrDefault(p => p.ProdutoId == id);
+        
+        var produto = _context.Produtos.AsNoTracking().FirstOrDefaultAsync(p => p.ProdutoId == id);
         if (produto == null)
         {
             return NotFound("Produto não encontrado...");
         }
 
-        return produto;
+        return await produto;
     }
+    
+    // [HttpGet("{id:int:min(1)}", Name="ObterProduto")]
+    // public async Task<ActionResult<Produto>> Get(int id, [BindRequired] string nome)
+    // {
+    //     var nomeProduto = nome;
+    //     
+    //     var produto = _context.Produtos.AsNoTracking().FirstOrDefaultAsync(p => p.ProdutoId == id);
+    //     if (produto == null)
+    //     {
+    //         return NotFound("Produto não encontrado...");
+    //     }
+    //
+    //     return await produto;
+    // }
 
     [HttpPost]
     public ActionResult<Produto> Post(Produto produto)

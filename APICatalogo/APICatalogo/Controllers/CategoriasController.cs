@@ -1,5 +1,6 @@
 using APICatalogo.Context;
 using APICatalogo.Domains;
+using APICatalogo.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,18 @@ public class CategoriasController : ControllerBase
             return NotFound();
         }
         return categorias;
+    }
+    
+    [HttpGet("UsandoFromServices/{nome}")]
+    public ActionResult<string> GetSaudacaoFromServices([FromServices] IMeuServico meuServico, string nome)
+    {
+       return meuServico.Saudacao(nome);
+    }
+    
+    [HttpGet("SemUsarFromServices/{nome}")]
+    public ActionResult<string> GetSaudacaoSemFromServices(IMeuServico meuServico, string nome)
+    {
+        return meuServico.Saudacao(nome);
     }
 
     [HttpGet("produtos")]
