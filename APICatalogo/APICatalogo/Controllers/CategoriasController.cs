@@ -1,5 +1,6 @@
 using APICatalogo.Context;
 using APICatalogo.Domains;
+using APICatalogo.Filters;
 using APICatalogo.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,12 +12,29 @@ namespace APICatalogo.Controllers;
 public class CategoriasController : ControllerBase
 {
     private readonly AppDbContext _context;
-    public CategoriasController(AppDbContext context)
+    private readonly IConfiguration _configuration;
+    private readonly ILogger _logger;
+    public CategoriasController(AppDbContext context, IConfiguration configuration, ILogger<CategoriasController> logger)
     {
         _context = context;
+        _configuration = configuration;
+        _logger = logger;
     }
+
+    // [HttpGet("LerArquivoConfiguracao")]
+    // public string GetValores()
+    // {
+    //     var valor1 = _configuration["chave1"];
+    //     var valor2 = _configuration["chave2"];
+    //
+    //     var secao1 = _configuration["secao1:chave2"];
+    //
+    //     return $"Chave1 = {valor1} \nChave2 = {valor2} \nSeção1 => Chave2 = {secao1}";
+    // }
+    
     
     [HttpGet]
+    [ServiceFilter(typeof(ApiLoggingFilter))]
     public ActionResult<IEnumerable<Categoria>> Get()
     {
         var categorias =  _context.Categorias.AsNoTracking().ToList();
@@ -27,21 +45,22 @@ public class CategoriasController : ControllerBase
         return categorias;
     }
     
-    [HttpGet("UsandoFromServices/{nome}")]
-    public ActionResult<string> GetSaudacaoFromServices([FromServices] IMeuServico meuServico, string nome)
-    {
-       return meuServico.Saudacao(nome);
-    }
-    
-    [HttpGet("SemUsarFromServices/{nome}")]
-    public ActionResult<string> GetSaudacaoSemFromServices(IMeuServico meuServico, string nome)
-    {
-        return meuServico.Saudacao(nome);
-    }
+    // [HttpGet("UsandoFromServices/{nome}")]
+    // public ActionResult<string> GetSaudacaoFromServices([FromServices] IMeuServico meuServico, string nome)
+    // {
+    //    return meuServico.Saudacao(nome);
+    // }
+    //
+    // [HttpGet("SemUsarFromServices/{nome}")]
+    // public ActionResult<string> GetSaudacaoSemFromServices(IMeuServico meuServico, string nome)
+    // {
+    //     return meuServico.Saudacao(nome);
+    // }
 
     [HttpGet("produtos")]
     public ActionResult<IEnumerable<Categoria>> GetCategoriaProdutos()
     {
+        _logger.LogInformation($"======================== GET CATEGORIAS PRODUTOS  ========================");
         var categorias = _context.Categorias.AsNoTracking().Include(p => p.Produtos).ToList();
         return categorias;
     }
@@ -49,12 +68,22 @@ public class CategoriasController : ControllerBase
     [HttpGet("{id:int}", Name="ObterCategoria")]
     public ActionResult<Categoria> Get(int id)
     {
+        // throw new Exception("Exceção ao retornar a categoria por Id");
+
+        // string[] teste = null;
+        // if (teste.Length > 0)
+        // {
+        //     
+        // }
+        
+        // _logger.LogInformation($"======================== GET api/categorias/id = {id}  ========================");
+        
         var categoria = _context.Categorias.FirstOrDefault(c => c.CategoriaId == id);
         if (categoria == null)
         {
             return NotFound("Categoria não encontrada...");
         }
-
+        
         return categoria;
     }
 
