@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "knrRX4sSp20=",
+  "dgSpecHash": "DxAwpUmYg6g=",
   "success": true,
   "projectFilePath": "/home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/APICatalogo.csproj",
   "expectedPackageFiles": [
@@ -25,7 +25,7 @@
     "/home/z1nl0x/.nuget/packages/mono.texttemplating/3.0.0/mono.texttemplating.3.0.0.nupkg.sha512",
     "/home/z1nl0x/.nuget/packages/mysqlconnector/2.4.0/mysqlconnector.2.4.0.nupkg.sha512",
     "/home/z1nl0x/.nuget/packages/pomelo.entityframeworkcore.mysql/9.0.0/pomelo.entityframeworkcore.mysql.9.0.0.nupkg.sha512",
-    "/home/z1nl0x/.nuget/packages/swashbuckle.aspnetcore.swaggerui/10.2.3/swashbuckle.aspnetcore.swaggerui.10.2.3.nupkg.sha512",
+    "/home/z1nl0x/.nuget/packages/scalar.aspnetcore/2.16.17/scalar.aspnetcore.2.16.17.nupkg.sha512",
     "/home/z1nl0x/.nuget/packages/system.codedom/6.0.0/system.codedom.6.0.0.nupkg.sha512",
     "/home/z1nl0x/.nuget/packages/system.composition/7.0.0/system.composition.7.0.0.nupkg.sha512",
     "/home/z1nl0x/.nuget/packages/system.composition.attributedmodel/7.0.0/system.composition.attributedmodel.7.0.0.nupkg.sha512",

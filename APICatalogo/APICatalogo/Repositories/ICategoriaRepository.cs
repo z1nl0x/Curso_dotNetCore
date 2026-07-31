@@ -2,8 +2,6 @@ using APICatalogo.Domains;
 
 namespace APICatalogo.Repositories;
 
-public interface ICategoriaRepository
+public interface ICategoriaRepository : IRepository<Categoria>
 {
-   IEnumerable<Categoria> GetCategorias();
-   
 }

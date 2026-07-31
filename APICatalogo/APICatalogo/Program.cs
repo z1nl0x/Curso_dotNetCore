@@ -1,6 +1,8 @@
+using Scalar.AspNetCore;
 using System.Text.Json.Serialization;
 using APICatalogo.Context;
 using APICatalogo.Filters;
+using APICatalogo.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,13 +21,16 @@ string mySqlConnectionString = builder.Configuration.GetConnectionString("Defaul
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(mySqlConnectionString, ServerVersion.AutoDetect(mySqlConnectionString)));
 
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwaggerUI(options => 
-        options.SwaggerEndpoint("/openapi/v1.json", "Catalogo API v1"));
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();

@@ -6,9 +6,7 @@
 /home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/bin/Debug/net10.0/APICatalogo.runtimeconfig.json
 /home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/bin/Debug/net10.0/APICatalogo.dll
 /home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/bin/Debug/net10.0/APICatalogo.pdb
-/home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/bin/Debug/net10.0/Microsoft.AspNetCore.OpenApi.dll
 /home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/bin/Debug/net10.0/Microsoft.OpenApi.dll
-/home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerUI.dll
 /home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/obj/Debug/net10.0/APICatalogo.csproj.AssemblyReference.cache
 /home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/obj/Debug/net10.0/rpswa.dswa.cache.json
 /home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/obj/Debug/net10.0/APICatalogo.GeneratedMSBuildEditorConfig.editorconfig
@@ -121,3 +119,5 @@
 /home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/bin/Debug/net10.0/tr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 /home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/bin/Debug/net10.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 /home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/bin/Debug/net10.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/bin/Debug/net10.0/Microsoft.AspNetCore.OpenApi.dll
+/home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/bin/Debug/net10.0/Scalar.AspNetCore.dll
