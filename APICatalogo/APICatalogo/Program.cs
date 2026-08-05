@@ -1,6 +1,7 @@
 using Scalar.AspNetCore;
 using System.Text.Json.Serialization;
 using APICatalogo.Context;
+using APICatalogo.DTOs.Mappings;
 using APICatalogo.Filters;
 using APICatalogo.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,8 @@ builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUnitOfWork, UnityOfWork>();
+
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ProdutoDTOMappingProfile>());
 
 var app = builder.Build();
 
