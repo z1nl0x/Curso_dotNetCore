@@ -4,6 +4,7 @@ using APICatalogo.DTOs;
 using APICatalogo.DTOs.Mappings;
 using APICatalogo.Filters;
 using APICatalogo.Repositories;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,12 +17,14 @@ public class CategoriasController : ControllerBase
     // private readonly IRepository<Categoria> _categoriaRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger _logger;
+    private readonly IMapper _mapper;
     
-    public CategoriasController(IUnitOfWork unitOfWork, ILogger<CategoriasController> logger)
+    public CategoriasController(IUnitOfWork unitOfWork, ILogger<CategoriasController> logger,  IMapper mapper)
     {
         // _categoriaRepository =  categoriaRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _mapper = mapper;
     }
     
     
@@ -35,7 +38,8 @@ public class CategoriasController : ControllerBase
             return NotFound("Não existem categorias cadastradas!");
         }
 
-        var categoriasDto = categorias.ToCategoriaDTOList();
+        // var categoriasDto = categorias.ToCategoriaDTOList();
+        var categoriasDto = _mapper.Map<IEnumerable<CategoriaDTO>>(categorias);
         
         return Ok(categoriasDto);
     }
@@ -49,7 +53,8 @@ public class CategoriasController : ControllerBase
             return NotFound("Categoria não encontrada...");
         }
 
-        var categoriaDto = categoria.ToCategoriaDto();
+        // var categoriaDto = categoria.ToCategoriaDto();
+        var categoriaDto = _mapper.Map<CategoriaDTO>(categoria);
         
         return Ok(categoriaDto);
     }
@@ -63,12 +68,14 @@ public class CategoriasController : ControllerBase
             return BadRequest("Dados inválidos");
         }
 
-        var categoria = categoriaDto.ToCategoria();
+        // var categoria = categoriaDto.ToCategoria();
+        var categoria = _mapper.Map<Categoria>(categoriaDto);
         
         var novaCategoriaCriada = _unitOfWork.CategoriaRepository.Create(categoria);
         _unitOfWork.Commit();
 
-        var novaCategoriaDto = novaCategoriaCriada.ToCategoriaDto();
+        // var novaCategoriaDto = novaCategoriaCriada.ToCategoriaDto();
+        var novaCategoriaDto = _mapper.Map<CategoriaDTO>(novaCategoriaCriada);
         
         return new CreatedAtRouteResult("ObterCategoria", new { id = novaCategoriaDto.CategoriaId }, novaCategoriaDto);
     }
@@ -81,12 +88,14 @@ public class CategoriasController : ControllerBase
             return BadRequest();
         }
 
-        var categoria = categoriaDto.ToCategoria();
+        // var categoria = categoriaDto.ToCategoria();
+        var categoria = _mapper.Map<Categoria>(categoriaDto);
 
         var categoriaAtualizada = _unitOfWork.CategoriaRepository.Update(categoria);
         _unitOfWork.Commit();
 
-        var categoriaAtualizadaDto = categoriaAtualizada.ToCategoriaDto();
+        // var categoriaAtualizadaDto = categoriaAtualizada.ToCategoriaDto();
+        var categoriaAtualizadaDto =  _mapper.Map<CategoriaDTO>(categoriaAtualizada);
         
         return Ok(categoriaAtualizadaDto);
     }
@@ -106,7 +115,8 @@ public class CategoriasController : ControllerBase
         var categoriaExcluida = _unitOfWork.CategoriaRepository.Delete(categoria);
         _unitOfWork.Commit();
 
-        var categoriaExcluidaDto = categoriaExcluida.ToCategoriaDto();
+        // var categoriaExcluidaDto = categoriaExcluida.ToCategoriaDto();
+        var categoriaExcluidaDto =  _mapper.Map<CategoriaDTO>(categoriaExcluida);
         
         return Ok(categoriaExcluidaDto);
     }
