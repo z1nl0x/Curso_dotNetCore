@@ -28,12 +28,9 @@ public class CategoriasController : ControllerBase
         _logger = logger;
         _mapper = mapper;
     }
-
-    [HttpGet("pagination")]
-    public ActionResult<CategoriaDTO> Get([FromQuery] CategoriasParameters categoriasParameters)
+    
+    private ActionResult<CategoriaDTO> ObterCategorias(PagedList<Categoria> categorias)
     {
-        var categorias = _unitOfWork.CategoriaRepository.GetCategorias(categoriasParameters);
-
         var metadata = new
         {
             categorias.TotalCount,
@@ -50,7 +47,22 @@ public class CategoriasController : ControllerBase
         
         return Ok(categoriasDto);
     }
-    
+
+    [HttpGet("pagination")]
+    public ActionResult<CategoriaDTO> Get([FromQuery] CategoriasParameters categoriasParameters)
+    {
+        var categorias = _unitOfWork.CategoriaRepository.GetCategorias(categoriasParameters);
+
+        return ObterCategorias(categorias);
+    }
+
+    [HttpGet("filter/nome/pagination")]
+    public ActionResult<CategoriaDTO> GetCategoriasFiltradas([FromQuery] CategoriasFiltroNome categoriasFiltro)
+    {
+        var categoriasFiltradas = _unitOfWork.CategoriaRepository.GetCategoriasFiltroNome(categoriasFiltro);
+        
+        return ObterCategorias(categoriasFiltradas);
+    }
     
     [HttpGet]
     public ActionResult<IEnumerable<CategoriaDTO>> Get()
