@@ -14,7 +14,9 @@
           "Microsoft.AspNetCore.OpenApi": "10.0.9",
           "Microsoft.EntityFrameworkCore.Design": "9.0.0",
           "Pomelo.EntityFrameworkCore.MySql": "9.0.0",
-          "Scalar.AspNetCore": "2.16.17"
+          "Scalar.AspNetCore": "2.16.17",
+          "X.PagedList.EF": "10.5.9",
+          "X.PagedList.Mvc.Core": "10.5.9"
         },
         "runtime": {
           "APICatalogo.dll": {}
@@ -358,22 +360,22 @@
           }
         }
       },
-      "Microsoft.EntityFrameworkCore/9.0.0": {
+      "Microsoft.EntityFrameworkCore/9.0.8": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Abstractions": "9.0.0"
+          "Microsoft.EntityFrameworkCore.Abstractions": "9.0.8"
         },
         "runtime": {
           "lib/net8.0/Microsoft.EntityFrameworkCore.dll": {
-            "assemblyVersion": "9.0.0.0",
-            "fileVersion": "9.0.24.52902"
+            "assemblyVersion": "9.0.8.0",
+            "fileVersion": "9.0.825.36802"
           }
         }
       },
-      "Microsoft.EntityFrameworkCore.Abstractions/9.0.0": {
+      "Microsoft.EntityFrameworkCore.Abstractions/9.0.8": {
         "runtime": {
           "lib/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {
-            "assemblyVersion": "9.0.0.0",
-            "fileVersion": "9.0.24.52902"
+            "assemblyVersion": "9.0.8.0",
+            "fileVersion": "9.0.825.36802"
           }
         }
       },
@@ -397,7 +399,7 @@
       },
       "Microsoft.EntityFrameworkCore.Relational/9.0.0": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "9.0.0"
+          "Microsoft.EntityFrameworkCore": "9.0.8"
         },
         "runtime": {
           "lib/net8.0/Microsoft.EntityFrameworkCore.Relational.dll": {
@@ -588,6 +590,37 @@
             "fileVersion": "7.0.22.51805"
           }
         }
+      },
+      "X.PagedList/10.5.9": {
+        "runtime": {
+          "lib/net8.0/X.PagedList.dll": {
+            "assemblyVersion": "10.5.9.0",
+            "fileVersion": "10.5.9.0"
+          }
+        }
+      },
+      "X.PagedList.EF/10.5.9": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "9.0.8",
+          "X.PagedList": "10.5.9"
+        },
+        "runtime": {
+          "lib/net8.0/X.PagedList.EF.dll": {
+            "assemblyVersion": "10.5.9.0",
+            "fileVersion": "10.5.9.0"
+          }
+        }
+      },
+      "X.PagedList.Mvc.Core/10.5.9": {
+        "dependencies": {
+          "X.PagedList": "10.5.9"
+        },
+        "runtime": {
+          "lib/net8.0/X.PagedList.Mvc.Core.dll": {
+            "assemblyVersion": "10.5.9.0",
+            "fileVersion": "10.5.9.0"
+          }
+        }
       }
     }
   },
@@ -681,19 +714,19 @@
       "path": "microsoft.codeanalysis.workspaces.msbuild/4.8.0",
       "hashPath": "microsoft.codeanalysis.workspaces.msbuild.4.8.0.nupkg.sha512"
     },
-    "Microsoft.EntityFrameworkCore/9.0.0": {
+    "Microsoft.EntityFrameworkCore/9.0.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-wpG+nfnfDAw87R3ovAsUmjr3MZ4tYXf6bFqEPVAIKE6IfPml3DS//iX0DBnf8kWn5ZHSO5oi1m4d/Jf+1LifJQ==",
-      "path": "microsoft.entityframeworkcore/9.0.0",
-      "hashPath": "microsoft.entityframeworkcore.9.0.0.nupkg.sha512"
+      "sha512": "sha512-bNGdPhN762+BIIO5MFYLjafRqkSS1MqLOc/erd55InvLnFxt9H3N5JNsuag1ZHyBor1VtD42U0CHpgqkWeAYgQ==",
+      "path": "microsoft.entityframeworkcore/9.0.8",
+      "hashPath": "microsoft.entityframeworkcore.9.0.8.nupkg.sha512"
     },
-    "Microsoft.EntityFrameworkCore.Abstractions/9.0.0": {
+    "Microsoft.EntityFrameworkCore.Abstractions/9.0.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-fnmifFL8KaA4ZNLCVgfjCWhZUFxkrDInx5hR4qG7Q8IEaSiy/6VOSRFyx55oH7MV4y7wM3J3EE90nSpcVBI44Q==",
-      "path": "microsoft.entityframeworkcore.abstractions/9.0.0",
-      "hashPath": "microsoft.entityframeworkcore.abstractions.9.0.0.nupkg.sha512"
+      "sha512": "sha512-B2yfAIQRRAQ4zvvWqh+HudD+juV3YoLlpXnrog3tU0PM9AFpuq6xo0+mEglN1P43WgdcUiF+65CWBcZe35s15Q==",
+      "path": "microsoft.entityframeworkcore.abstractions/9.0.8",
+      "hashPath": "microsoft.entityframeworkcore.abstractions.9.0.8.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore.Design/9.0.0": {
       "type": "package",
@@ -841,6 +874,27 @@
       "sha512": "sha512-ZK0KNPfbtxVceTwh+oHNGUOYV2WNOHReX2AXipuvkURC7s/jPwoWfsu3SnDBDgofqbiWr96geofdQ2erm/KTHg==",
       "path": "system.composition.typedparts/7.0.0",
       "hashPath": "system.composition.typedparts.7.0.0.nupkg.sha512"
+    },
+    "X.PagedList/10.5.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iwrGkIQn/puv4kNe23GVSPtpvKf5bl1aSbhIoWAhrl5LnvEmTwkGftlxSEFlgInVmMx1cb8Q7ivJPqxJtw7TAg==",
+      "path": "x.pagedlist/10.5.9",
+      "hashPath": "x.pagedlist.10.5.9.nupkg.sha512"
+    },
+    "X.PagedList.EF/10.5.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hnXssJZFvb9nN7iHUADptipPNs0RzSbg2JJF8bv4RyAfSIAYVGm/TAHOE8szs5z2j9CNqoEyU6TU8bi3BI2hUw==",
+      "path": "x.pagedlist.ef/10.5.9",
+      "hashPath": "x.pagedlist.ef.10.5.9.nupkg.sha512"
+    },
+    "X.PagedList.Mvc.Core/10.5.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LhZwvTyUtn+BYVVc4ERCfZeK+br76nPQy8GTXg4pL9jOazusAUNiGkKBRFL/owOgAdTRKPLtHj+pBfZup7weyg==",
+      "path": "x.pagedlist.mvc.core/10.5.9",
+      "hashPath": "x.pagedlist.mvc.core.10.5.9.nupkg.sha512"
     }
   }
 }

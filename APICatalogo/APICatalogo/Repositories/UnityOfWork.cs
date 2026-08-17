@@ -22,9 +22,9 @@ public class UnityOfWork : IUnitOfWork
         get { return _categoriaRepo = _categoriaRepo ?? new CategoriaRepository(_context); }
     }
     
-    public void Commit()
+    public async Task CommitAsync()
     {
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
     public void Dispose()

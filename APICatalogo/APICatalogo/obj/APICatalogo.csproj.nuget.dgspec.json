@@ -73,6 +73,14 @@
             "Scalar.AspNetCore": {
               "target": "Package",
               "version": "[2.16.17, )"
+            },
+            "X.PagedList.EF": {
+              "target": "Package",
+              "version": "[10.5.9, )"
+            },
+            "X.PagedList.Mvc.Core": {
+              "target": "Package",
+              "version": "[10.5.9, )"
             }
           },
           "imports": [

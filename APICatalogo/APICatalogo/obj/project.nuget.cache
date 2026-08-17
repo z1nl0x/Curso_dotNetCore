@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "sEL7gTcf09g=",
+  "dgSpecHash": "oqdFdjDKmGI=",
   "success": true,
   "projectFilePath": "/home/z1nl0x/Documentos/Pessoal/Curso_dotNetCore/APICatalogo/APICatalogo/APICatalogo.csproj",
   "expectedPackageFiles": [
@@ -18,9 +18,9 @@
     "/home/z1nl0x/.nuget/packages/microsoft.codeanalysis.csharp.workspaces/4.8.0/microsoft.codeanalysis.csharp.workspaces.4.8.0.nupkg.sha512",
     "/home/z1nl0x/.nuget/packages/microsoft.codeanalysis.workspaces.common/4.8.0/microsoft.codeanalysis.workspaces.common.4.8.0.nupkg.sha512",
     "/home/z1nl0x/.nuget/packages/microsoft.codeanalysis.workspaces.msbuild/4.8.0/microsoft.codeanalysis.workspaces.msbuild.4.8.0.nupkg.sha512",
-    "/home/z1nl0x/.nuget/packages/microsoft.entityframeworkcore/9.0.0/microsoft.entityframeworkcore.9.0.0.nupkg.sha512",
-    "/home/z1nl0x/.nuget/packages/microsoft.entityframeworkcore.abstractions/9.0.0/microsoft.entityframeworkcore.abstractions.9.0.0.nupkg.sha512",
-    "/home/z1nl0x/.nuget/packages/microsoft.entityframeworkcore.analyzers/9.0.0/microsoft.entityframeworkcore.analyzers.9.0.0.nupkg.sha512",
+    "/home/z1nl0x/.nuget/packages/microsoft.entityframeworkcore/9.0.8/microsoft.entityframeworkcore.9.0.8.nupkg.sha512",
+    "/home/z1nl0x/.nuget/packages/microsoft.entityframeworkcore.abstractions/9.0.8/microsoft.entityframeworkcore.abstractions.9.0.8.nupkg.sha512",
+    "/home/z1nl0x/.nuget/packages/microsoft.entityframeworkcore.analyzers/9.0.8/microsoft.entityframeworkcore.analyzers.9.0.8.nupkg.sha512",
     "/home/z1nl0x/.nuget/packages/microsoft.entityframeworkcore.design/9.0.0/microsoft.entityframeworkcore.design.9.0.0.nupkg.sha512",
     "/home/z1nl0x/.nuget/packages/microsoft.entityframeworkcore.relational/9.0.0/microsoft.entityframeworkcore.relational.9.0.0.nupkg.sha512",
     "/home/z1nl0x/.nuget/packages/microsoft.extensions.dependencymodel/9.0.0/microsoft.extensions.dependencymodel.9.0.0.nupkg.sha512",
@@ -41,7 +41,10 @@
     "/home/z1nl0x/.nuget/packages/system.composition.convention/7.0.0/system.composition.convention.7.0.0.nupkg.sha512",
     "/home/z1nl0x/.nuget/packages/system.composition.hosting/7.0.0/system.composition.hosting.7.0.0.nupkg.sha512",
     "/home/z1nl0x/.nuget/packages/system.composition.runtime/7.0.0/system.composition.runtime.7.0.0.nupkg.sha512",
-    "/home/z1nl0x/.nuget/packages/system.composition.typedparts/7.0.0/system.composition.typedparts.7.0.0.nupkg.sha512"
+    "/home/z1nl0x/.nuget/packages/system.composition.typedparts/7.0.0/system.composition.typedparts.7.0.0.nupkg.sha512",
+    "/home/z1nl0x/.nuget/packages/x.pagedlist/10.5.9/x.pagedlist.10.5.9.nupkg.sha512",
+    "/home/z1nl0x/.nuget/packages/x.pagedlist.ef/10.5.9/x.pagedlist.ef.10.5.9.nupkg.sha512",
+    "/home/z1nl0x/.nuget/packages/x.pagedlist.mvc.core/10.5.9/x.pagedlist.mvc.core.10.5.9.nupkg.sha512"
   ],
   "logs": [
     {
