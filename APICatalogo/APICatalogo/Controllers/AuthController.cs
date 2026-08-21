@@ -31,6 +31,7 @@ public class AuthController : ControllerBase
 
     [HttpPost]
     [Route("CreateRole")]
+    [Authorize(Policy =  "SuperAdminOnly")]
     public async Task<IActionResult> CreateRole(string roleName)
     {
         var roleExists = await _roleManager.RoleExistsAsync(roleName);
@@ -41,8 +42,8 @@ public class AuthController : ControllerBase
 
             if (roleResult.Succeeded)
             {
-                _logger.LogInformation("Role created!");
-                return StatusCode(StatusCodes.Status200OK, new Response { Status = "Success", Message = $"Role {roleName} created!" });
+                _logger.LogInformation("Role criada!");
+                return StatusCode(StatusCodes.Status200OK, new Response { Status = "Success", Message = $"Role {roleName} criada!" });
             }
             else
             {
@@ -50,7 +51,30 @@ public class AuthController : ControllerBase
                 return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = $"Error {roleResult.Errors}" });
             }
         }
-        return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Role already exist!"});
+        return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Role já existente!"});
+    }
+
+    [HttpPost]
+    [Route("AddUserToRole")]
+    [Authorize(Policy =  "SuperAdminOnly")]
+    public async Task<IActionResult> AddUserToRole(string email, string roleName)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user is not null)
+        {
+            var result = await _userManager.AddToRoleAsync(user, roleName);
+            if (result.Succeeded)
+            {
+                _logger.LogInformation(1, $"User {user.Email} adicionado  ao role {roleName}!");
+                return StatusCode(StatusCodes.Status200OK, new Response { Status = "Success", Message = $"User {user.Email} adicionado com sucesso ao role {roleName}!" });
+            }
+        }
+        else
+        {
+            _logger.LogInformation(1, $"Error: Não foi possível adicionar usuário {user.Email} para o role {roleName}!");
+        }
+
+        return BadRequest(new { error = "Não foi possível encontrar o usuário!" });
     }
 
     [HttpPost]
@@ -67,6 +91,7 @@ public class AuthController : ControllerBase
             {
                 new Claim(ClaimTypes.Name, user.UserName!),
                 new Claim(ClaimTypes.Email, user.Email!),
+                new Claim("id", user.UserName!),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
@@ -172,9 +197,9 @@ public class AuthController : ControllerBase
     }
     
     
-    [Authorize]
     [HttpPost]
     [Route("revoke/{username}")]
+    [Authorize(Policy = "ExclusiveOnly")]
     public async Task<IActionResult> Revoke(string username)
     {
         var user = await _userManager.FindByNameAsync(username);
