@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 
 // dotnet tool update --global dotnet-ef --version 9.0.19 --allow-downgrade  
 
@@ -24,7 +25,36 @@ builder.Services.AddControllers(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 }).AddNewtonsoftJson();
     
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    // No .NET 10 (OpenApi.NET v2) o AddOpenApi NÃO declara nenhum
+    // security scheme sozinho. Precisamos adicionar o Bearer via
+    // document transformer pro Scalar saber que existe autenticação JWT.
+    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    {
+        var bearerScheme = new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.Http,
+            Scheme = "bearer",
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Name = "Authorization",
+            Description = "Informe apenas o token JWT (o prefixo 'Bearer ' é adicionado automaticamente)."
+        };
+
+        document.Components ??= new OpenApiComponents();
+        document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
+        document.Components.SecuritySchemes["Bearer"] = bearerScheme;
+
+        document.Security ??= new List<OpenApiSecurityRequirement>();
+        document.Security.Add(new OpenApiSecurityRequirement
+        {
+            [new OpenApiSecuritySchemeReference("Bearer", document)] = new List<string>()
+        });
+
+        return Task.CompletedTask;
+    });
+});
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
@@ -70,7 +100,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference();
+    app.MapScalarApiReference(options =>
+    {
+        // Deixa o Bearer/JWT já selecionado no painel de autenticação
+        options.AddPreferredSecuritySchemes("Bearer");
+        // Mantém o token salvo no navegador entre reloads (localStorage)
+        options.EnablePersistentAuthentication();
+    });
 }
 
 app.UseHttpsRedirection();
