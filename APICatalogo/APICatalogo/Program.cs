@@ -1,6 +1,7 @@
 using System.Text;
 using Scalar.AspNetCore;
 using System.Text.Json.Serialization;
+using System.Threading.RateLimiting;
 using APICatalogo.Context;
 using APICatalogo.Domains;
 using APICatalogo.DTOs.Mappings;
@@ -9,6 +10,7 @@ using APICatalogo.Repositories;
 using APICatalogo.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
@@ -24,7 +26,30 @@ builder.Services.AddControllers(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 }).AddNewtonsoftJson();
-    
+
+// DEFININDO UMA POLITICA CORS E NOMEANDO-A
+builder.Services.AddCors(options =>
+    options.AddPolicy("OrigensComAcessoPermitido",
+        policy =>
+        {
+            policy.WithOrigins("https://apirequest.io", "http://apirequest.io")
+                  .AllowAnyHeader()
+                  .WithMethods("GET", "POST");
+        })
+);
+
+
+// DEFININDO UMA POLITICA CORS DEFAULT
+// builder.Services.AddCors(options =>
+//     options.AddDefaultPolicy(
+//         policy =>
+//         {
+//             policy.WithOrigins("https://apirequest.io", "http://apirequest.io")
+//                   .AllowAnyHeader()
+//                   .AllowAnyMethod();
+//         })
+// );
+
 builder.Services.AddOpenApi(options =>
 {
     // No .NET 10 (OpenApi.NET v2) o AddOpenApi NÃO declara nenhum
@@ -101,6 +126,18 @@ builder.Services.AddAuthorization(options =>
         Claim.Type == "id" && Claim.Value == "kreft") || context.User.IsInRole("SuperAdmin")));
 });
 
+builder.Services.AddRateLimiter(rateLimitedOptions =>
+{
+    rateLimitedOptions.AddFixedWindowLimiter(policyName: "fixedwindow", options =>
+    {
+        options.PermitLimit = 1;
+        options.Window = TimeSpan.FromSeconds(5);
+        options.QueueLimit = 0;
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+    });
+    rateLimitedOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+});
+
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -124,6 +161,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseRateLimiter();
+
+app.UseCors("OrigensComAcessoPermitido");
+// app.UseCors();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
