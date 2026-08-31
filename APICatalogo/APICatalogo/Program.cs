@@ -1,5 +1,4 @@
 using System.Text;
-using Scalar.AspNetCore;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using APICatalogo.Context;
@@ -50,34 +49,32 @@ builder.Services.AddCors(options =>
 //         })
 // );
 
-builder.Services.AddOpenApi(options =>
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
 {
-    // No .NET 10 (OpenApi.NET v2) o AddOpenApi NÃO declara nenhum
-    // security scheme sozinho. Precisamos adicionar o Bearer via
-    // document transformer pro Scalar saber que existe autenticação JWT.
-    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    options.SwaggerDoc("v1", new OpenApiInfo
     {
-        var bearerScheme = new OpenApiSecurityScheme
-        {
-            Type = SecuritySchemeType.Http,
-            Scheme = "bearer",
-            BearerFormat = "JWT",
-            In = ParameterLocation.Header,
-            Name = "Authorization",
-            Description = "Informe apenas o token JWT (o prefixo 'Bearer ' é adicionado automaticamente)."
-        };
+        Title = "APICatalogo",
+        Version = "v1",
+        Description = "Catálogo de Produtos e Categorias"
+    });
 
-        document.Components ??= new OpenApiComponents();
-        document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
-        document.Components.SecuritySchemes["Bearer"] = bearerScheme;
+    // Registra o esquema de segurança JWT Bearer (botão "Authorize" no Swagger UI).
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Informe apenas o token JWT (o prefixo 'Bearer ' é adicionado automaticamente)."
+    });
 
-        document.Security ??= new List<OpenApiSecurityRequirement>();
-        document.Security.Add(new OpenApiSecurityRequirement
-        {
-            [new OpenApiSecuritySchemeReference("Bearer", document)] = new List<string>()
-        });
-
-        return Task.CompletedTask;
+    // Exige o esquema Bearer nos endpoints protegidos.
+    // No OpenApi.NET v2 a referência é feita via OpenApiSecuritySchemeReference.
+    options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+    {
+        [new OpenApiSecuritySchemeReference("Bearer", document, null)] = new List<string>()
     });
 });
 
@@ -150,13 +147,10 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
-    app.MapScalarApiReference(options =>
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
     {
-        // Deixa o Bearer/JWT já selecionado no painel de autenticação
-        options.AddPreferredSecuritySchemes("Bearer");
-        // Mantém o token salvo no navegador entre reloads (localStorage)
-        options.EnablePersistentAuthentication();
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "APICatalogo v1");
     });
 }
 

@@ -80,7 +80,7 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Policy = "UserOnly")]
+    [Authorize(Policy = "SuperAdminOnly")]
     public async Task<ActionResult<IEnumerable<ProdutoDTO>>> Get()
     {
         var produtos = await _unitOfWork.ProdutoRepository.GetAllAsync();
